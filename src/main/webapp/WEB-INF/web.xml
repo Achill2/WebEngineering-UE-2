@@ -4,7 +4,7 @@
   <description>This servlet takes the user's answer?!</description> <!--  TODO anpassen -->
   <servlet>
   	<servlet-name>Quiz</servlet-name>
-  	<servlet-class>BigQuizServlet</servlet-class>
+  	<servlet-class>at.ac.tuwien.big.we14.lab2.servlet.BigQuizServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>Quiz</servlet-name>
