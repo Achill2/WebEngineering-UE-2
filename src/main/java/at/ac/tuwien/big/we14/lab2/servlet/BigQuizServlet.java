@@ -1,3 +1,12 @@
 package at.ac.tuwien.big.we14.lab2.servlet;
 
-// Your Servlet implementation
+import javax.servlet.http.HttpServlet;
+
+public class BigQuizServlet extends HttpServlet {
+	
+	
+	
+	
+	
+	
+}
