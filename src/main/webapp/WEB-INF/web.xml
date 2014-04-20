@@ -8,7 +8,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>Quiz</servlet-name>
-  	<url-pattern>/BigQuizServlet</url-pattern> <!-- TODO anpassen -->
+  	<url-pattern>/BigQuizServlet/*</url-pattern> <!-- TODO anpassen -->
   </servlet-mapping>
   
   

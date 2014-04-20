@@ -29,11 +29,13 @@ public class QuizData {
 	
 	private Random randomGenerator;
 	
-	public QuizData(QuestionDataProvider provider) {
-		player1 = "Player1";
-		player2 = "Player2";
+	
+	
+	public QuizData() {
+		player1 = "Player 1";
+		player2 = "Player 2";
 		
-		this.provider = provider;
+		provider = QuizFactory.INSTANCE.createQuestionDataProvider();
 		categories = provider.loadCategoryData();
 		
 		rounds = new ArrayList<Round>();

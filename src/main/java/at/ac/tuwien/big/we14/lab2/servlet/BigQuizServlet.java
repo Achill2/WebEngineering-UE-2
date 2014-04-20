@@ -30,11 +30,10 @@ public class BigQuizServlet extends HttpServlet {
 		if(action.equals("startGame")) { 
 			// test Aufruf TODO 
 			
-			QuizFactory factory = new ServletQuizFactory(this.getServletContext());
-			
+			QuizFactory.INSTANCE = ServletQuizFactory.init(this.getServletContext());
 			
 			HttpSession session = request.getSession(true);
-	        session.setAttribute("raceData", new QuizData(factory.createQuestionDataProvider()));
+	        session.setAttribute("quizData", new QuizData());
 			
 			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/question.jsp");

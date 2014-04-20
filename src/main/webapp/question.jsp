@@ -1,11 +1,12 @@
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+
 <jsp:useBean id="quizData" scope="session" class="at.ac.tuwien.big.we14.lab2.api.beans.QuizData"/>
-<?xml version="1.0" encoding="UTF-8"?>
+<%@ page language="java" contentType="text/html"  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
     <head>
         <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Business Informatics Group Quiz</title>
         <link rel="stylesheet" type="text/css" href="style/screen.css" />
@@ -42,7 +43,7 @@
                         <li><span class="accessibility">Frage 3:</span><span id="player2answer3" class="unknown">Unbekannt</span></li>
                     </ul>
                 </div>
-                <div id="currentcategory"><span class="accessibility">Kategorie:</span> Sport</div>
+                <div id="currentcategory"><span class="accessibility">Kategorie:</span><%= quizData.getCurrentRound().getCategoryName()%></div>
             </section>
             
             <!-- Question -->
@@ -50,7 +51,7 @@
                 
                 <form id="questionform" action="BigQuizServlet" method="post">
                     <h2 id="questionheading" class="accessibility">Frage</h2>
-                    <p id="questiontext">Welche zwei LVAs werden im Model EWA zusammengefasst?</p>
+                    <p id="questiontext"><%= quizData.getCurrentRound().getCurrentQuestion().getText()%></p>
                     <ul id="answers">
                         <li><input id="option1" type="checkbox"/><label for="option1">IT Strategie</label></li>
                         <li><input id="option2" type="checkbox"/><label for="option2">Web Engineering</label></li>
