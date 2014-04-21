@@ -1,5 +1,7 @@
 package at.ac.tuwien.big.we14.lab2.api.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -16,6 +18,9 @@ public class Round {
 	private Category category;
 	private int indexOfCurrentQuestion = -1;
 	private Question[] questions;
+	private List<Answer> answersPlayer1;
+	private List<Answer> answersPlayer2;
+	
 	private Random randomGenerator;
 
 	
@@ -25,10 +30,19 @@ public class Round {
 		randomGenerator = new Random();
 		questions = new Question[numberOfQuestions];
 		
+		answersPlayer1 = new ArrayList<Answer>();
+		answersPlayer2 = new ArrayList<Answer>();
+		
 		
 		// initialize questions etc
 		initializeQuestions(numberOfQuestions, category);
 		indexOfCurrentQuestion = 0;
+		
+		// initialize answers
+		for(int i = 0; i < questions.length; i++) {
+			answersPlayer1.add(new Answer());
+			answersPlayer2.add(new Answer());
+		}
 	}
 	
 	/**
@@ -101,6 +115,21 @@ public class Round {
 		}
 		
 	}
+
+	public List<Answer> getAnswersPlayer2() {
+		return answersPlayer2;
+	}
+
+	public List<Answer> getAnswersPlayer1() {
+		return answersPlayer1;
+	}
+
+	
+	
+
+
+
+
 	
 
 	

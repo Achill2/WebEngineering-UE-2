@@ -30,7 +30,7 @@ public class BigQuizServlet extends HttpServlet {
 		if(action.equals("startGame")) { 
 			// test Aufruf TODO 
 			
-			QuizFactory.INSTANCE = ServletQuizFactory.init(this.getServletContext());
+			QuizFactory.INSTANCE = ServletQuizFactory.init(this.getServletContext()); // TODO auslagern
 			
 			HttpSession session = request.getSession(true);
 	        session.setAttribute("quizData", new QuizData());
@@ -40,16 +40,38 @@ public class BigQuizServlet extends HttpServlet {
             dispatcher.forward(request, response);
             
 
+		} else if (action.equals("nextRound")) {
+			// check if there is a nextRound or if the game ends
+			QuizData data = (QuizData)request.getSession().getAttribute("quizData");
+			if (data.nextRound()) {
+				// next round
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/question.jsp");
+	            dispatcher.forward(request, response);
+			} else {
+				// game ends
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/finish.jsp");
+	            dispatcher.forward(request, response);
+			}
 		}
 		
 	}  
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// test
-		res.setContentType("text/html");
-		PrintWriter out = res.getWriter();
-		out.println("<h1>test</h1>");
+		// get next question or show end of round/end of game
+		
+		QuizData data = (QuizData)req.getSession().getAttribute("quizData");
+		if (data.getCurrentRound().nextQuestion()) {
+			// another question exists in this round
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/question.jsp");
+            dispatcher.forward(req, res);
+            // TODO wirklich wieder aufrufen oder gibt es ein question.jsp refresh?!
+		} else {
+			// round is over, show statistics
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/roundcomplete.jsp");
+            dispatcher.forward(req, res);
+			
+		}
 		
 	}
 	

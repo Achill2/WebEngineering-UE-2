@@ -1,5 +1,8 @@
 
-
+<%@ page import="java.util.List" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.Choice" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.AnswerStatus" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.impl.Answer" %>
 <jsp:useBean id="quizData" scope="session" class="at.ac.tuwien.big.we14.lab2.api.beans.QuizData"/>
 <%@ page language="java" contentType="text/html"  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,17 +33,21 @@
                 <div id="player1info">
                     <span id="player1name"><%= quizData.getPlayer1Name()%></span>
                     <ul class="playerroundsummary">
-                        <li><span class="accessibility">Frage 1:</span><span id="player1answer1" class="correct">Richtig</span></li>
-                        <li><span class="accessibility">Frage 2:</span><span id="player1answer2" class="incorrect">Falsch</span></li>
-                        <li><span class="accessibility">Frage 3:</span><span id="player1answer3" class="unknown">Unbekannt</span></li>
-                    </ul>
+                    	<% List<Answer> player1Answers = quizData.getCurrentRound().getAnswersPlayer1(); %>
+                    	<% for (int i = 0; i < player1Answers.size(); i++) { 
+                    		AnswerStatus answerStatus = player1Answers.get(i).getStatus(); %>
+                    	 	<li><span class="accessibility">Frage <%= i+1 %>:</span><span id=<%="player1answer" + (i+1)%> class=<%=answerStatus.getCode()%>><%=answerStatus.getName()%></span></li>
+                    	<% } %>
+                       </ul>
                 </div>
                 <div id="player2info">
                     <span id="player2name"><%= quizData.getPlayer2Name()%></span>
                     <ul class="playerroundsummary">
-                        <li><span class="accessibility">Frage 1:</span><span id="player2answer1" class="correct">Richtig</span></li>
-                        <li><span class="accessibility">Frage 2:</span><span id="player2answer2" class="correct">Richtig</span></li>
-                        <li><span class="accessibility">Frage 3:</span><span id="player2answer3" class="unknown">Unbekannt</span></li>
+                    	<% List<Answer> player2Answers = quizData.getCurrentRound().getAnswersPlayer1(); %>
+                    	<% for (int i = 0; i < player2Answers.size(); i++) { 
+                    		AnswerStatus answerStatus = player1Answers.get(i).getStatus(); %>
+                    	 	<li><span class="accessibility">Frage <%= i+1 %>:</span><span id=<%="player2answer" + (i+1)%> class=<%=answerStatus.getCode()%>><%=answerStatus.getName()%></span></li>
+                    	<% } %>   
                     </ul>
                 </div>
                 <div id="currentcategory"><span class="accessibility">Kategorie:</span><%= quizData.getCurrentRound().getCategoryName()%></div>
@@ -53,11 +60,12 @@
                     <h2 id="questionheading" class="accessibility">Frage</h2>
                     <p id="questiontext"><%= quizData.getCurrentRound().getCurrentQuestion().getText()%></p>
                     <ul id="answers">
-                        <li><input id="option1" type="checkbox"/><label for="option1">IT Strategie</label></li>
-                        <li><input id="option2" type="checkbox"/><label for="option2">Web Engineering</label></li>
-                        <li><input id="option3" type="checkbox"/><label for="option3">Semistrukturierte Daten</label></li>
-                        <li><input id="option4" type="checkbox"/><label for="option4">Objektorientierte Modellierung</label></li>
-                    </ul>
+                    <% List<Choice> choices = quizData.getCurrentRound().getCurrentQuestion().getAllChoices(); 
+                    %>
+                    <%for  (int i=0; i < choices.size(); i++) { %>
+                    	<li><input id= <%=choices.get(i).getId()%> type="checkbox"/><label for=<%=choices.get(i).getId() %>><%= choices.get(i).getText() %></label></li>
+                    <% } %>
+                        </ul>
                     <input id="timeleftvalue" type="hidden" value="100"/>
                     <input id="next" type="submit" value="weiter" accesskey="s"/>
                 </form>

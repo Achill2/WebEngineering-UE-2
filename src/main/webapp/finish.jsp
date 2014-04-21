@@ -38,7 +38,7 @@
                     <span id="player2name" class="playername">Spieler 2</span>
                     <p id="player2roundcounter" class="playerroundcounter">Gewonnene Runden: <span id="player2wonrounds" class="playerwonrounds">1</span></p>
                 </div>
-                <a id="next" href="question.html" accesskey="n">Neues Spiel</a>
+                <a id="next" href="BigQuizServlet?action=startGame" accesskey="n">Neues Spiel</a>
             </section>
         </section>
 
