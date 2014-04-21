@@ -1,3 +1,9 @@
+
+<%@ page import="java.util.List" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.Choice" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.AnswerStatus" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.impl.Answer" %>
+<%@ page import="at.ac.tuwien.big.we14.lab2.api.Winner" %>
 <jsp:useBean id="quizData" scope="session" class="at.ac.tuwien.big.we14.lab2.api.beans.QuizData"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <?xml version="1.0" encoding="UTF-8"?>
@@ -25,7 +31,21 @@
             <!-- winner message -->
             <section id="roundwinner" aria-labelledby="roundwinnerheading">
                 <h2 id="roundwinnerheading" class="accessibility">Rundenzwischenstand</h2>
-                <p class="roundwinnermessage">Spieler 2 gewinnt Runde 1!</p>
+                <p class="roundwinnermessage">
+                	<%
+                		Winner winner = quizData.getCurrentRound().getWinner();
+                	                	String message;
+                	                	int roundNumber = quizData.getNumberOfCurrentRound();
+                	                	if (winner == Winner.PLAYER1){
+                	                		message = quizData.getPlayer1Name() + " gewinnt Runde " + roundNumber + "!";
+                	                	} else if (winner == Winner.PLAYER2) {
+                	                		message = quizData.getPlayer2Name() + " gewinnt Runde " + roundNumber + "!";
+                	                	} else {
+                	                		message = "Runde " + roundNumber + " ist unentschieden!";
+                	                	}
+                	%>
+                	<%=message%>
+                </p>
             </section>
         
             <!-- round info -->    
@@ -34,20 +54,24 @@
                 <div id="player1info" class="playerinfo">
                     <span id="player1name" class="playername"><%= quizData.getPlayer1Name() %></span>
                     <ul class="playerroundsummary">
-                        <li><span class="accessibility">Frage 1:</span><span id="player1answer1" class="correct">Richtig</span></li>
-                        <li><span class="accessibility">Frage 2:</span><span id="player1answer2" class="incorrect">Falsch</span></li>
-                        <li><span class="accessibility">Frage 3:</span><span id="player1answer3" class="correct">Richtig</span></li>
+                        <% List<Answer> player1Answers = quizData.getCurrentRound().getAnswersPlayer1(); %>
+                    	<% for (int i = 0; i < player1Answers.size(); i++) { 
+                    		AnswerStatus answerStatus = player1Answers.get(i).getStatus(); %>
+                    	 	<li><span class="accessibility">Frage <%= i+1 %>:</span><span id=<%="player1answer" + (i+1)%> class=<%=answerStatus.getCode()%>><%=answerStatus.getName()%></span></li>
+                    	<% } %>
                     </ul>
-                    <p id="player1roundcounter" class="playerroundcounter">Gewonnene Runden: <span id="player1wonrounds" class="playerwonrounds">2</span></p>
+                    <p id="player1roundcounter" class="playerroundcounter">Gewonnene Runden: <span id="player1wonrounds" class="playerwonrounds"><%= quizData.getPlayer1().getNumberOfWonRounds() %></span></p>
                 </div>
                 <div id="player2info" class="playerinfo">
-                    <span id="player2name" class="playername"><%= quizData.getPlayer1Name() %></span>
+                    <span id="player2name" class="playername"><%= quizData.getPlayer2Name() %></span>
                     <ul class="playerroundsummary">
-                        <li><span class="accessibility">Frage 1:</span><span id="player2answer1" class="correct">Richtig</span></li>
-                        <li><span class="accessibility">Frage 2:</span><span id="player2answer2" class="correct">Richtig</span></li>
-                        <li><span class="accessibility">Frage 3:</span><span id="player2answer3" class="correct">Richtig</span></li>
+                    	<% List<Answer> player2Answers = quizData.getCurrentRound().getAnswersPlayer2(); %>
+                    	<% for (int i = 0; i < player2Answers.size(); i++) { 
+                    		AnswerStatus answerStatus = player2Answers.get(i).getStatus(); %>
+                    	 	<li><span class="accessibility">Frage <%= i+1 %>:</span><span id=<%="player2answer" + (i+1)%> class=<%=answerStatus.getCode()%>><%=answerStatus.getName()%></span></li>
+                    	<% } %>    
                     </ul>
-                    <p id="player2roundcounter" class="playerroundcounter">Gewonnene Runden: <span id="player2wonrounds" class="playerwonrounds">1</span></p>
+                    <p id="player2roundcounter" class="playerroundcounter">Gewonnene Runden: <span id="player2wonrounds" class="playerwonrounds"><%= quizData.getPlayer2().getNumberOfWonRounds() %></span></p>
                 </div>
                 <a id="next" href="BigQuizServlet?action=nextRound">Weiter</a>
             </section>

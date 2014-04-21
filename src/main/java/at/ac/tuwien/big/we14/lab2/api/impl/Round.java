@@ -7,6 +7,7 @@ import java.util.Random;
 
 import at.ac.tuwien.big.we14.lab2.api.Category;
 import at.ac.tuwien.big.we14.lab2.api.Question;
+import at.ac.tuwien.big.we14.lab2.api.Winner;
 
 /**
  * holds the information of one question round
@@ -22,6 +23,8 @@ public class Round {
 	private List<Answer> answersPlayer2;
 	
 	private Random randomGenerator;
+	
+	private Winner winner;
 
 	
 	public Round(int numberOfQuestions, Category category) {
@@ -43,6 +46,8 @@ public class Round {
 			answersPlayer1.add(new Answer());
 			answersPlayer2.add(new Answer());
 		}
+		
+		setWinner(Winner.NOTFINISHED);
 	}
 	
 	/**
@@ -123,6 +128,19 @@ public class Round {
 	public List<Answer> getAnswersPlayer1() {
 		return answersPlayer1;
 	}
+
+	public int getIndexOfCurrentQuestion() {
+		return indexOfCurrentQuestion;
+	}
+
+	public Winner getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Winner winner) {
+		this.winner = winner;
+	}
+
 
 	
 	

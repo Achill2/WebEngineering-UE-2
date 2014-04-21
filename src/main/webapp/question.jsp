@@ -43,9 +43,9 @@
                 <div id="player2info">
                     <span id="player2name"><%= quizData.getPlayer2Name()%></span>
                     <ul class="playerroundsummary">
-                    	<% List<Answer> player2Answers = quizData.getCurrentRound().getAnswersPlayer1(); %>
+                    	<% List<Answer> player2Answers = quizData.getCurrentRound().getAnswersPlayer2(); %>
                     	<% for (int i = 0; i < player2Answers.size(); i++) { 
-                    		AnswerStatus answerStatus = player1Answers.get(i).getStatus(); %>
+                    		AnswerStatus answerStatus = player2Answers.get(i).getStatus(); %>
                     	 	<li><span class="accessibility">Frage <%= i+1 %>:</span><span id=<%="player2answer" + (i+1)%> class=<%=answerStatus.getCode()%>><%=answerStatus.getName()%></span></li>
                     	<% } %>   
                     </ul>
@@ -63,10 +63,10 @@
                     <% List<Choice> choices = quizData.getCurrentRound().getCurrentQuestion().getAllChoices(); 
                     %>
                     <%for  (int i=0; i < choices.size(); i++) { %>
-                    	<li><input id= <%=choices.get(i).getId()%> type="checkbox"/><label for=<%=choices.get(i).getId() %>><%= choices.get(i).getText() %></label></li>
+                    	<li><input id= <%= "option" + (i+1)%> type="checkbox" name="choice" value="<%=choices.get(i).getId() %>"/><label for=<%= "option" + (i+1)%>><%= choices.get(i).getText() %></label></li>
                     <% } %>
                         </ul>
-                    <input id="timeleftvalue" type="hidden" value="100"/>
+                    <input id="timeleftvalue" name="timeleftvalue" type="hidden" value="100"/>
                     <input id="next" type="submit" value="weiter" accesskey="s"/>
                 </form>
             </section>

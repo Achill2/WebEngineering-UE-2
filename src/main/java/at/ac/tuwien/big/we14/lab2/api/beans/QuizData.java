@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 import at.ac.tuwien.big.we14.lab2.api.Category;
+import at.ac.tuwien.big.we14.lab2.api.Player;
 import at.ac.tuwien.big.we14.lab2.api.Question;
 import at.ac.tuwien.big.we14.lab2.api.QuestionDataProvider;
 import at.ac.tuwien.big.we14.lab2.api.QuizFactory;
+import at.ac.tuwien.big.we14.lab2.api.Winner;
 import at.ac.tuwien.big.we14.lab2.api.impl.JSONQuestionDataProvider;
 import at.ac.tuwien.big.we14.lab2.api.impl.Round;
 import at.ac.tuwien.big.we14.lab2.api.impl.ServletQuizFactory;
+import at.ac.tuwien.big.we14.lab2.api.impl.SimplePlayer;
 
 public class QuizData {
 	
@@ -18,8 +21,9 @@ public class QuizData {
 	public static final int NUMBEROFQUESTIONSPERROUND = 3;
 	
 	// player - vorerst nur String
-	private String player1;
-	private String player2;
+	private Player player1;
+	private Player player2;
+	private Winner winner;
 	
 	private QuestionDataProvider provider;
 	
@@ -32,8 +36,10 @@ public class QuizData {
 	
 	
 	public QuizData() {
-		player1 = "Player 1";
-		player2 = "Player 2";
+		player1 = new SimplePlayer("Peter");
+		player2 = new SimplePlayer("Susi");
+		
+		setWinner(Winner.NOTFINISHED);
 		
 		provider = QuizFactory.INSTANCE.createQuestionDataProvider();
 		categories = provider.loadCategoryData();
@@ -92,19 +98,40 @@ public class QuizData {
 	 * @return the current round
 	 */
 	public Round getCurrentRound() {
-		return rounds.get(rounds.size()-1);
+		return rounds.get(getNumberOfCurrentRound()-1);
+	}
+	
+	/**
+	 * 
+	 * @return number of current Round
+	 */
+	public int getNumberOfCurrentRound() {
+		return rounds.size();
 	}
 	
 	// -------- mainly for test purpose
 	public String getPlayer1Name() {
-		return player1;
+		return player1.getName();
 	}
 	
 	public String getPlayer2Name() {
+		return player2.getName();
+	}
+
+	public Player getPlayer2() {
 		return player2;
 	}
-	
-	
-	
+
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	public Winner getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Winner winner) {
+		this.winner = winner;
+	}
 
 }
