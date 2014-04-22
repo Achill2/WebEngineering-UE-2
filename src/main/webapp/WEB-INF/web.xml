@@ -15,6 +15,6 @@
   
   <!-- start page -->
   <welcome-file-list>
-  	<welcome-file>start.html</welcome-file>
+  	<welcome-file>start.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

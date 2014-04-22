@@ -90,7 +90,7 @@
             
             // initialize time
             $(document).ready(function() {
-                var maxtime = 30;
+                var maxtime = <%= quizData.getCurrentRound().getCurrentQuestion().getMaxTime()%>;
                 var hiddenInput = $("#timeleftvalue");
                 var meter = $("#timer meter");
                 var timeleft = $("#timeleft");
