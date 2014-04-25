@@ -20,8 +20,8 @@
         </nav>
         
         <section role="main" id="quiz">
-          <form id="startGameform" action="BigQuizServlet?action=startGame" method="get">
-          	<input id="startgame" type="submit" value="Quiz starten" accesskey="s"/>
+          <form id="startGameform" action="BigQuizServlet" method="get">
+          	<input id="startgame" type="submit" name="action" value="Quiz starten" accesskey="s"/>
           </form>
         </section>
 

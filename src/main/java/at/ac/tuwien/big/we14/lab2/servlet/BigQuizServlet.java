@@ -33,8 +33,18 @@ public class BigQuizServlet extends HttpServlet {
 			return;
 		}
 		
+//		// TODO remove test
+//		response.setContentType("text/html;charset=UTF-8");
+//		PrintWriter out = response.getWriter();
+//		out.println("<html>");
+//		out.println("<body>");
+//		out.println("<h1>Hello " + action + "</h1>");
+//		out.println("</body>");
+//		out.println("</html>");
+		
+		
 		// start the Game, go to the question.jpa
-		if(action.equals("startGame")) { 
+		if(action.equals("Quiz starten") || action.equals("Neues Spiel")) { 
 			// test Aufruf TODO 
 			
 			QuizFactory.INSTANCE = ServletQuizFactory.init(this.getServletContext()); // TODO auslagern
@@ -47,7 +57,7 @@ public class BigQuizServlet extends HttpServlet {
             dispatcher.forward(request, response);
             
 
-		} else if (action.equals("nextRound")) {
+		} else if (action.equals("Weiter")) {
 			// check if there is a nextRound or if the game ends
 			QuizData data = (QuizData)request.getSession().getAttribute("quizData");
 			if (data.nextRound()) {

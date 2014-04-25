@@ -73,7 +73,9 @@
                     </ul>
                     <p id="player2roundcounter" class="playerroundcounter">Gewonnene Runden: <span id="player2wonrounds" class="playerwonrounds"><%= quizData.getPlayer2().getNumberOfWonRounds() %></span></p>
                 </div>
-                <a id="next" href="BigQuizServlet?action=nextRound">Weiter</a>
+                 <form id="roundCompleteform" action="BigQuizServlet" method="get">
+          			<input id="next" type="submit" name="action" value="Weiter" accesskey="s"/>
+          		</form>
             </section>
         </section>
 
