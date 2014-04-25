@@ -62,21 +62,21 @@ public class JSONQuestionDataProvider implements QuestionDataProvider {
 }
 
 class CategoryDeserializer implements JsonDeserializer<Category> {
-	
+
 	private QuizFactory factory;
 
 	public CategoryDeserializer(QuizFactory factory) {
 		this.factory = factory;
 	}
-	
+
 	@Override
 	public Category deserialize(JsonElement json, Type type,
 			JsonDeserializationContext context) throws JsonParseException {
 		Category category = factory.createCategory();
 		JsonObject object = json.getAsJsonObject();
-		
+
 		category.setName(object.get("name").getAsString());
-		
+
 		for (JsonElement jsonquestion : object.get("questions")
 				.getAsJsonArray()) {
 			Question question = context.deserialize(jsonquestion,
@@ -91,11 +91,11 @@ class CategoryDeserializer implements JsonDeserializer<Category> {
 }
 
 class QuestionDeserialzier implements JsonDeserializer<Question> {
-	
+
 	private QuizFactory factory;
 
 	private int lastChoiceId = 0;
-	
+
 	public QuestionDeserialzier(QuizFactory factory) {
 		this.factory = factory;
 	}
@@ -107,17 +107,18 @@ class QuestionDeserialzier implements JsonDeserializer<Question> {
 		Question question = factory.createQuestion();
 
 		JsonObject object = json.getAsJsonObject();
-		question.setId( object.get("id").getAsInt());
-		question.setText( object.get("text").getAsString());
+		question.setId(object.get("id").getAsInt());
+		question.setText(object.get("text").getAsString());
 
-		for (JsonElement wrongChoice : object.get("wrongChoices").getAsJsonArray()) {
+		for (JsonElement wrongChoice : object.get("wrongChoices")
+				.getAsJsonArray()) {
 			SimpleChoice choice = context.deserialize(wrongChoice,
 					new TypeToken<SimpleChoice>() {
 					}.getType());
 			choice.setId(lastChoiceId++);
 			question.addChoice(choice, false);
 		}
-		
+
 		question.setMaxTime(object.get("maxTime").getAsLong());
 
 		for (JsonElement correctChoice : object.get("correctChoices")
