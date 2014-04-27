@@ -40,7 +40,7 @@
 					if (quizData.getWinner() == Winner.PLAYER1) {
 						message = quizData.getPlayer1Name() + " gewinnt!";
 					} else if (quizData.getWinner() == Winner.PLAYER2) {
-						message = quizData.getPlayer1Name() + " gewinnt!";
+						message = quizData.getPlayer2Name() + " gewinnt!";
 					} else {
 						message = "Unentschieden!";
 					}
