@@ -95,7 +95,7 @@
 		</section>
 
 		<section id="lastgame">
-			<p>Letztes Spiel: Nie</p>
+			<p>Letztes Spiel: <span id="lastgame_field">Nie</span></p>
 		</section>
 	</section>
 
@@ -105,6 +105,19 @@
 	<script type="text/javascript">
             //<![CDATA[
             
+            initializeLastGame();
+			// set value of the last-game-field
+			function initializeLastGame() {
+				var lastGame;
+				if (localStorage["lastGameDate"]!=null) {
+					lastGame = localStorage["lastGameDate"];
+				} else {
+					lastGame = "Nie";
+				}
+				
+				$("#lastgame_field").text(lastGame);
+			}
+                       
             // initialize time
             $(document).ready(function() {
                 var maxtime = <%= quizData.getCurrentRound().getCurrentQuestion().getMaxTime()%>

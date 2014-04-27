@@ -76,5 +76,26 @@
 
 	<!-- footer -->
 	<footer role="contentinfo">© 2014 BIG Quiz</footer>
+	
+	<script type="text/javascript">
+            
+            // 
+            $(document).ready(function() {
+                if (supportsLocalStorage()) {
+                	// browser supports locale storage -> save date and time
+                	var current_date = new Date();
+                	var current_date_string = 
+                		current_date.getDate() + "/" 
+                		+ (current_date.getMonth() + 1) + "/" 
+                		+ current_date.getFullYear() + " "
+                		+ current_date.getHours() + ":"  
+                        + current_date.getMinutes();
+                		
+                	localStorage.setItem("lastGameDate", current_date_string);	
+                } else {
+                	// browser does not support locale storage - do nothing 
+                }
+			});
+     </script>
 </body>
 </html>
